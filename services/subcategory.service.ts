@@ -29,17 +29,13 @@ function toFormData(input: SubcategoryInput) {
 }
 
 export async function createSubcategory(input: SubcategoryInput) {
-  const { data } = await api.post("subcategory/add.php", toFormData(input), {
-    headers: { "Content-Type": "multipart/form-data" },
-  })
+  const { data } = await api.post("subcategory/add.php", toFormData(input))
   if (!isSuccess(data)) throw new Error(getMessage(data, "Failed to create subcategory"))
   return data
 }
 
 export async function updateSubcategory(input: SubcategoryInput) {
-  const { data } = await api.post("subcategory/update.php", toFormData(input), {
-    headers: { "Content-Type": "multipart/form-data" },
-  })
+  const { data } = await api.post("subcategory/update.php", toFormData(input))
   if (!isSuccess(data)) throw new Error(getMessage(data, "Failed to update subcategory"))
   return data
 }
@@ -47,9 +43,7 @@ export async function updateSubcategory(input: SubcategoryInput) {
 export async function deleteSubcategory(id: string | number) {
   const fd = new FormData()
   fd.append("id", String(id))
-  const { data } = await api.post("subcategory/delete.php", fd, {
-    headers: { "Content-Type": "multipart/form-data" },
-  })
+  const { data } = await api.post("subcategory/delete.php", fd)
   if (!isSuccess(data)) throw new Error(getMessage(data, "Failed to delete subcategory"))
   return data
 }

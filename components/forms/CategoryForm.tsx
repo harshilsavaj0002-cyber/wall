@@ -21,7 +21,7 @@ interface CategoryFormProps {
 }
 
 export function CategoryForm({ category, loading, onSubmit, onCancel }: CategoryFormProps) {
-  const [image, setImage] = useState<File | null>(null)
+  const [category_image, setCategoryImage] = useState<File | null>(null)
   const {
     register,
     handleSubmit,
@@ -34,7 +34,7 @@ export function CategoryForm({ category, loading, onSubmit, onCancel }: Category
   return (
     <form
       onSubmit={handleSubmit((values) =>
-        onSubmit({ id: category?.id, category_name: values.category_name, image }),
+        onSubmit({ id: category?.id, category_name: values.category_name, category_image }),
       )}
       className="space-y-5"
     >
@@ -50,7 +50,7 @@ export function CategoryForm({ category, loading, onSubmit, onCancel }: Category
         <Label>Category image</Label>
         <ImageUpload
           initialUrl={category?.image_url || category?.category_image}
-          onChange={setImage}
+          onChange={setCategoryImage}
         />
       </div>
 

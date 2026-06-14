@@ -3,7 +3,7 @@
 import { useState } from "react"
 import { ImageIcon, X as CloseIcon } from "lucide-react"
 import { cn } from "@/lib/utils"
-import { Dialog, DialogClose, DialogContent } from "@/components/ui/dialog"
+import { Dialog, DialogClose, DialogContent, DialogTitle } from "@/components/ui/dialog"
 
 interface SafeImageProps {
   src?: string | null
@@ -73,6 +73,7 @@ export function SafeImage({ src, alt, className, preview }: SafeImageProps) {
       {preview && (
         <Dialog open={previewOpen} onOpenChange={setPreviewOpen}>
           <DialogContent className="max-w-[90vw] max-h-[90vh] p-0 bg-transparent shadow-none">
+            <DialogTitle className="sr-only">Image preview</DialogTitle>
             <div className="relative flex min-h-[40vh] items-center justify-center overflow-hidden rounded-xl bg-black/90">
               <DialogClose className="absolute right-4 top-4 z-10 rounded-full bg-black/60 p-2 text-white shadow-lg hover:bg-black/80 focus-visible:ring-ring focus-visible:outline-none">
                 <CloseIcon className="size-4" />

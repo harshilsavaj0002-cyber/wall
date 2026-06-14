@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useMemo, useRef, useState } from "react"
 import { ImagePlus, X } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
@@ -13,13 +13,29 @@ interface ImageUploadProps {
   aspect?: string
 }
 
+function normalizeImageUrl(url?: string) {
+  if (!url) return undefined
+
+  try {
+    const parsed = new URL(url)
+    if (parsed.hostname === "wallpaper.soon.it") {
+      return `/api/proxy${parsed.pathname}${parsed.search}`
+    }
+  } catch {
+    // Keep original string for relative URLs or invalid URL values.
+  }
+
+  return url
+}
+
 export function ImageUpload({ initialUrl, onChange, className, aspect = "aspect-video" }: ImageUploadProps) {
   const inputRef = useRef<HTMLInputElement>(null)
-  const [preview, setPreview] = useState<string | undefined>(initialUrl)
+  const normalizedInitialUrl = useMemo(() => normalizeImageUrl(initialUrl), [initialUrl])
+  const [preview, setPreview] = useState<string | undefined>(normalizedInitialUrl)
 
   useEffect(() => {
-    setPreview(initialUrl)
-  }, [initialUrl])
+    setPreview(normalizedInitialUrl)
+  }, [normalizedInitialUrl])
 
   function handleFile(file: File | null) {
     onChange(file)
@@ -27,7 +43,7 @@ export function ImageUpload({ initialUrl, onChange, className, aspect = "aspect-
       const url = URL.createObjectURL(file)
       setPreview(url)
     } else {
-      setPreview(initialUrl)
+      setPreview(normalizedInitialUrl)
     }
   }
 

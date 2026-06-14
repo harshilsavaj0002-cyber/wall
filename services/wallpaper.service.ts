@@ -38,17 +38,13 @@ function toFormData(input: WallpaperInput) {
 }
 
 export async function createWallpaper(input: WallpaperInput) {
-  const { data } = await api.post("wallpaper/add.php", toFormData(input), {
-    headers: { "Content-Type": "multipart/form-data" },
-  })
+  const { data } = await api.post("wallpaper/add.php", toFormData(input))
   if (!isSuccess(data)) throw new Error(getMessage(data, "Failed to create wallpaper"))
   return data
 }
 
 export async function updateWallpaper(input: WallpaperInput) {
-  const { data } = await api.post("wallpaper/update.php", toFormData(input), {
-    headers: { "Content-Type": "multipart/form-data" },
-  })
+  const { data } = await api.post("wallpaper/update.php", toFormData(input))
   if (!isSuccess(data)) throw new Error(getMessage(data, "Failed to update wallpaper"))
   return data
 }
@@ -56,9 +52,7 @@ export async function updateWallpaper(input: WallpaperInput) {
 export async function deleteWallpaper(id: string | number) {
   const fd = new FormData()
   fd.append("id", String(id))
-  const { data } = await api.post("wallpaper/delete.php", fd, {
-    headers: { "Content-Type": "multipart/form-data" },
-  })
+  const { data } = await api.post("wallpaper/delete.php", fd)
   if (!isSuccess(data)) throw new Error(getMessage(data, "Failed to delete wallpaper"))
   return data
 }
